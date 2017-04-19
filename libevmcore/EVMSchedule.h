@@ -110,7 +110,11 @@ static const EVMSchedule MetropolisSchedule = []
 {
 	EVMSchedule schedule = EIP158Schedule;
 	schedule.haveRevert = true;
+<<<<<<< HEAD
 	schedule.haveCreateP2sh= true;
+=======
+	schedule.haveCreatePsh = true;
+>>>>>>> properly implement CREATE_PSH
 	return schedule;
 }();
 
