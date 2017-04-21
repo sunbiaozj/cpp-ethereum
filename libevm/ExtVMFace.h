@@ -235,7 +235,7 @@ private:
 	u256 m_gasUsed;
 };
 
-enum CreationContext: short;
+enum class CreationContext: short;
 
 /**
  * @brief Interface and null implementation of the class for specifying VM externalities.
