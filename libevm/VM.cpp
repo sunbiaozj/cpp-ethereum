@@ -224,6 +224,7 @@ void VM::interpretCases()
 			if (!m_schedule->haveDelegateCall)
 				throwBadInstruction();
 
+		CASE(STATICALL)
 		CASE(CALL)
 		CASE(CALLCODE)
 		{
