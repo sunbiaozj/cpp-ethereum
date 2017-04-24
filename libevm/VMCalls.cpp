@@ -160,7 +160,7 @@ bool VM::caseCallSetup(CallParameters *callParams, bytesRef& o_output)
 {
 	m_runGas = toInt63(m_schedule->callGas);
 
-	callParams->throwOnStateChanging = (m_OP == Instruction::STATICCALL || m_ext->throwOnStateChanging);
+	callParams->staticCall = (m_OP == Instruction::STATICCALL || m_ext->staticCall);
 
 	if ((m_OP == Instruction::CALL || m_OP == Instruction::STATICCALL) && !m_ext->exists(asAddress(m_SP[1])))
 		if (m_SP[2] > 0 || m_schedule->zeroValueTransferChargesNewAccountGas())
