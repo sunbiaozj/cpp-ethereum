@@ -64,6 +64,13 @@ void VM::throwBadJumpDestination()
 	BOOST_THROW_EXCEPTION(BadJumpDestination());
 }
 
+void VM::throwDisallowedStateChange()
+{
+	if (m_onFail)
+		(this->*m_onFail)();
+	BOOST_THROW_EXCEPTION(DisallowedStateChange());
+}
+
 void VM::throwBadStack(unsigned _removed, unsigned _added)
 {
 	bigint size = m_stackEnd - m_SPP;
@@ -166,7 +173,7 @@ bool VM::caseCallSetup(CallParameters *callParams, bytesRef& o_output)
 		if (m_SP[2] > 0 || m_schedule->zeroValueTransferChargesNewAccountGas())
 			m_runGas += toInt63(m_schedule->callNewAccountGas);
 
-	if (m_OP != Instruction::DELEGATECALL && m_SP[2] > 0)
+	if ((m_OP == Instruction::CALL || m_OP == Instruction::CALLCODE) && m_SP[2] > 0)
 		m_runGas += toInt63(m_schedule->callValueTransferGas);
 
 	size_t sizesOffset = m_OP == Instruction::DELEGATECALL ? 2 : 3;
