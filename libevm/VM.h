@@ -54,6 +54,12 @@ struct InstructionMetric
 	int ret;
 };
 
+enum class CreationContext: short
+{
+	Transaction,
+	CREATE,
+	CREATE_P2SH
+};
 
 /**
  */

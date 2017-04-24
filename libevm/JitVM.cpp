@@ -11,7 +11,7 @@ namespace eth
 {
 namespace
 {
-
+	
 static_assert(sizeof(Address) == sizeof(evm_uint160be),
               "Address types size mismatch");
 static_assert(alignof(Address) == alignof(evm_uint160be),
@@ -181,7 +181,7 @@ int64_t evm_call(
 	{
 		assert(_outputSize == 20);
 		u256 gas = _gas;
-		auto addr = env.create(value, gas, input, Instruction::CREATE, {});
+		auto addr = env.create(value, gas, input, CreationContext::CREATE, {});
 		auto gasLeft = static_cast<decltype(_gas)>(gas);
 		if (addr)
 			std::memcpy(_outputData, addr.data(), 20);

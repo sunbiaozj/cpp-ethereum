@@ -78,12 +78,7 @@ private:
 	DebugOptions m_options;
 };
 
-enum class CreationContext: short
-{
-	Transaction,
-	CREATE,
-	CREATE_P2SH
-};
+enum class CreationContext: short;
 
 /**
  * @brief Message-call/contract-creation executor; useful for executing transactions.
