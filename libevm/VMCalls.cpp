@@ -140,6 +140,7 @@ void VM::caseCall()
 {
 	m_bounce = &VM::interpretCases;
 	unique_ptr<CallParameters> callParams(new CallParameters());
+
 	bytesRef output;
 	if (caseCallSetup(callParams.get(), output))
 	{
@@ -159,7 +160,9 @@ bool VM::caseCallSetup(CallParameters *callParams, bytesRef& o_output)
 {
 	m_runGas = toInt63(m_schedule->callGas);
 
-	if (m_OP == Instruction::CALL && !m_ext->exists(asAddress(m_SP[1])))
+	callParams->throwOnStateChanging = (m_OP == Instruction::STATICCALL || m_ext->throwOnStateChanging);
+
+	if ((m_OP == Instruction::CALL || m_OP == Instruction::STATICCALL) && !m_ext->exists(asAddress(m_SP[1])))
 		if (m_SP[2] > 0 || m_schedule->zeroValueTransferChargesNewAccountGas())
 			m_runGas += toInt63(m_schedule->callNewAccountGas);
 
@@ -221,7 +224,7 @@ bool VM::caseCallSetup(CallParameters *callParams, bytesRef& o_output)
 	{
 		callParams->onOp = m_onOp;
 		callParams->senderAddress = m_OP == Instruction::DELEGATECALL ? m_ext->caller : m_ext->myAddress;
-		callParams->receiveAddress = m_OP == Instruction::CALL ? callParams->codeAddress : m_ext->myAddress;
+		callParams->receiveAddress = (m_OP == Instruction::CALL || m_OP == Instruction::STATICCALL) ? callParams->codeAddress : m_ext->myAddress;
 		callParams->data = bytesConstRef(m_mem.data() + inOff, inSize);
 		o_output = bytesRef(m_mem.data() + outOff, outSize);
 		return true;

@@ -201,6 +201,7 @@ struct CallParameters
 	u256 apparentValue;
 	u256 gas;
 	bytesConstRef data;
+	bool throwOnStateChanging;
 	OnOpFunc onOp;
 };
 
@@ -245,7 +246,7 @@ public:
 	ExtVMFace() = default;
 
 	/// Full constructor.
-	ExtVMFace(EnvInfo const& _envInfo, Address _myAddress, Address _caller, Address _origin, u256 _value, u256 _gasPrice, bytesConstRef _data, bytes _code, h256 const& _codeHash, unsigned _depth);
+	ExtVMFace(EnvInfo const& _envInfo, Address _myAddress, Address _caller, Address _origin, u256 _value, u256 _gasPrice, bytesConstRef _data, bytes _code, h256 const& _codeHash, unsigned _depth, bool _throwOnStateChanging);
 
 	virtual ~ExtVMFace() = default;
 
@@ -307,6 +308,7 @@ public:
 	h256 codeHash;				///< SHA3 hash of the executing code
 	SubState sub;				///< Sub-band VM state (suicides, refund counter, logs).
 	unsigned depth = 0;			///< Depth of the present call.
+	bool throwOnStateChanging;  ///< Throw on state changing.
 };
 
 }

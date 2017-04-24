@@ -43,8 +43,8 @@ class ExtVM: public ExtVMFace
 {
 public:
 	/// Full constructor.
-	ExtVM(State& _s, EnvInfo const& _envInfo, SealEngineFace const& _sealEngine, Address _myAddress, Address _caller, Address _origin, u256 _value, u256 _gasPrice, bytesConstRef _data, bytesConstRef _code, h256 const& _codeHash, unsigned _depth = 0):
-		ExtVMFace(_envInfo, _myAddress, _caller, _origin, _value, _gasPrice, _data, _code.toBytes(), _codeHash, _depth), m_s(_s), m_sealEngine(_sealEngine)
+	ExtVM(State& _s, EnvInfo const& _envInfo, SealEngineFace const& _sealEngine, Address _myAddress, Address _caller, Address _origin, u256 _value, u256 _gasPrice, bytesConstRef _data, bytesConstRef _code, h256 const& _codeHash, unsigned _depth = 0, bool _throwOnStateChanging = false):
+		ExtVMFace(_envInfo, _myAddress, _caller, _origin, _value, _gasPrice, _data, _code.toBytes(), _codeHash, _depth, _throwOnStateChanging), m_s(_s), m_sealEngine(_sealEngine)
 	{
 		// Contract: processing account must exist. In case of CALL, the ExtVM
 		// is created only if an account has code (so exist). In case of CREATE
@@ -94,6 +94,7 @@ public:
 private:
 	State& m_s;  ///< A reference to the base state.
 	SealEngineFace const& m_sealEngine;
+	bool m_throwOnStateChanging;
 };
 
 }

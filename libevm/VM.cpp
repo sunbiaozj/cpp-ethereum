@@ -214,6 +214,9 @@ void VM::interpretCases()
 		
 		CASE(CREATE)
 		{
+			if (m_schedule->haveStaticCall && m_ext->throwOnStateChanging)
+				throwBadInstruction();
+
 			m_bounce = &VM::caseCreate;
 		}
 		BREAK
@@ -224,7 +227,7 @@ void VM::interpretCases()
 			if (!m_schedule->haveDelegateCall)
 				throwBadInstruction();
 
-		CASE(STATICALL)
+		CASE(STATICCALL)
 		CASE(CALL)
 		CASE(CALLCODE)
 		{
@@ -266,6 +269,9 @@ void VM::interpretCases()
 
 		CASE(SUICIDE)
 		{
+			if (m_schedule->haveStaticCall && m_ext->throwOnStateChanging)
+				throwBadInstruction();
+
 			m_runGas = toInt63(m_schedule->suicideGas);
 			Address dest = asAddress(m_SP[0]);
 
@@ -1068,6 +1074,9 @@ void VM::interpretCases()
 
 		CASE(SSTORE)
 		{
+			if (m_schedule->haveStaticCall && m_ext->throwOnStateChanging)
+				throwBadInstruction();
+
 			if (!m_ext->store(m_SP[0]) && m_SP[1])
 				m_runGas = toInt63(m_schedule->sstoreSetGas);
 			else if (m_ext->store(m_SP[0]) && !m_SP[1])
