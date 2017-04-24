@@ -7,6 +7,8 @@ namespace dev
 {
 namespace eth
 {
+	
+enum class CreationContext: short;
 
 class JitVM: public VMFace
 {
