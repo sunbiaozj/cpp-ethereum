@@ -308,7 +308,7 @@ public:
 	h256 codeHash;				///< SHA3 hash of the executing code
 	SubState sub;				///< Sub-band VM state (suicides, refund counter, logs).
 	unsigned depth = 0;			///< Depth of the present call.
-	bool staticCall;			///< Throw on state changing.
+	bool staticCall = false;	///< Throw on state changing.
 };
 
 }

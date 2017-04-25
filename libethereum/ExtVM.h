@@ -94,7 +94,6 @@ public:
 private:
 	State& m_s;  ///< A reference to the base state.
 	SealEngineFace const& m_sealEngine;
-	bool m_staticCall;
 };
 
 }
