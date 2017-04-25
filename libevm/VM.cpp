@@ -226,7 +226,6 @@ void VM::interpretCases()
 		CASE(CALL)
 		CASE(CALLCODE)
 		{
-			// Pre-homestead
 			if (m_OP == Instruction::DELEGATECALL && !m_schedule->haveDelegateCall)
 				throwBadInstruction();
 			if (m_OP == Instruction::STATICCALL && !m_schedule->haveStaticCall)
