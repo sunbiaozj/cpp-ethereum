@@ -215,7 +215,7 @@ void VM::interpretCases()
 		CASE(CREATE)
 		{
 			if (m_schedule->haveStaticCall && m_ext->staticCall)
-				throwBadInstruction();
+				throwDisallowedStateChange();
 
 			m_bounce = &VM::caseCreate;
 		}
