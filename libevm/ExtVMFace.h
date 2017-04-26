@@ -194,6 +194,18 @@ using OnOpFunc = std::function<void(uint64_t /*steps*/, uint64_t /* PC */, Instr
 
 struct CallParameters
 {
+	CallParameters() = default;
+	CallParameters(
+		Address _senderAddress,
+		Address _codeAddress,
+		Address _receiveAddress,
+		u256 _valueTransfer,
+		u256 _apparentValue,
+		u256 _gas,
+		bytesConstRef _data,
+		OnOpFunc _onOpFunc
+	):	senderAddress(_senderAddress), codeAddress(_codeAddress), receiveAddress(_receiveAddress),
+		valueTransfer(_valueTransfer), apparentValue(_apparentValue), gas(_gas), data(_data), onOp(_onOpFunc)  {}
 	Address senderAddress;
 	Address codeAddress;
 	Address receiveAddress;
@@ -201,7 +213,7 @@ struct CallParameters
 	u256 apparentValue;
 	u256 gas;
 	bytesConstRef data;
-	bool staticCall;
+	bool staticCall = false;
 	OnOpFunc onOp;
 };
 
