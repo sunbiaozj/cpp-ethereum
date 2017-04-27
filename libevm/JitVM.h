@@ -7,7 +7,7 @@ namespace dev
 {
 namespace eth
 {
-	
+
 class JitVM: public VMFace
 {
 public:

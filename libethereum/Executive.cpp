@@ -439,7 +439,7 @@ bool Executive::go(OnOpFunc const& _onOp)
 			m_excepted = toTransactionException(_e);
 			revert();
 		}
-		catch (AddressAlreadyUsed const _e)
+		catch (AddressAlreadyUsed const& _e)
 		{
 			// EIP86
 			clog(StateSafeExceptions) << "Address already used. " << diagnostic_information(_e);
