@@ -348,6 +348,9 @@ void VM::interpretCases()
 
 		CASE(LOG0)
 		{
+			if (m_schedule->haveStaticCall && m_ext->staticCall)
+				throwDisallowedStateChange();
+
 			logGasMem();
 			ON_OP();
 			updateIOGas();
@@ -358,6 +361,9 @@ void VM::interpretCases()
 
 		CASE(LOG1)
 		{
+			if (m_schedule->haveStaticCall && m_ext->staticCall)
+				throwDisallowedStateChange();
+
 			logGasMem();
 			ON_OP();
 			updateIOGas();
@@ -368,6 +374,9 @@ void VM::interpretCases()
 
 		CASE(LOG2)
 		{
+			if (m_schedule->haveStaticCall && m_ext->staticCall)
+				throwDisallowedStateChange();
+
 			logGasMem();
 			ON_OP();
 			updateIOGas();
@@ -378,6 +387,9 @@ void VM::interpretCases()
 
 		CASE(LOG3)
 		{
+			if (m_schedule->haveStaticCall && m_ext->staticCall)
+				throwDisallowedStateChange();
+
 			logGasMem();
 			ON_OP();
 			updateIOGas();
@@ -388,6 +400,9 @@ void VM::interpretCases()
 
 		CASE(LOG4)
 		{
+			if (m_schedule->haveStaticCall && m_ext->staticCall)
+				throwDisallowedStateChange();
+
 			logGasMem();
 			ON_OP();
 			updateIOGas();
