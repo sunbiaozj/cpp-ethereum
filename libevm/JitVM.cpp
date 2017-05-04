@@ -182,7 +182,7 @@ int64_t evm_call(
 	{
 		assert(_outputSize == 20);
 		u256 gas = _gas;
-		auto addr = env.create(value, gas, input, CreationContext::CREATE, {});
+		auto addr = env.create(value, gas, input, Instruction::CREATE, {});
 		auto gasLeft = static_cast<decltype(_gas)>(gas);
 		if (addr)
 			std::memcpy(_outputData, addr.data(), 20);
