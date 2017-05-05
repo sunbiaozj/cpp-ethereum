@@ -326,7 +326,7 @@ bool Executive::createOpcode(Address _txSender, u256 _endowment, u256 _gasPrice,
 	return executeCreate(_txSender, _endowment, _gasPrice, _gas, _init, _origin);
 }
 
-bool Executive::createP2shOpcode(Address _txSender, u256 _endowment, u256 _gasPrice, u256 _gas, bytesConstRef _init, Address _origin)
+bool Executive::create2Opcode(Address _txSender, u256 _endowment, u256 _gasPrice, u256 _gas, bytesConstRef _init, Address _origin)
 {
 	m_newAddress = right160(sha3(_txSender.asBytes() + sha3(_init).asBytes()));
 	return executeCreate(_txSender, _endowment, _gasPrice, _gas, _init, _origin);

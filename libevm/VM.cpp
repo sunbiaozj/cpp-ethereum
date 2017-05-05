@@ -212,7 +212,7 @@ void VM::interpretCases()
 		// Call-related instructions
 		//
 
-		CASE(CREATE_P2SH)
+		CASE(CREATE2)
 		{
 			if (!m_schedule->haveCreateP2sh)
 				throwBadInstruction();

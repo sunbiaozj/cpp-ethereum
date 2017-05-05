@@ -45,12 +45,12 @@ h160 FakeExtVM::create(u256 _endowment, u256& io_gas, bytesConstRef _init, Instr
 	 * EIP86:
 	 *  creation from:
 	 *   - CREATE: always create using nonce
-	 *   - CREATE_P2SH: declared after metropolis fork, create using code
+	 *   - CREATE2: declared after metropolis fork, create using code
 	 */
 	Address na;
 	if (_op == Instruction::CREATE)
 		na = right160(sha3(rlpList(myAddress, get<1>(addresses[myAddress]))));
-	else if (_op == Instruction::CREATE_P2SH)
+	else if (_op == Instruction::CREATE2)
 		na = right160(sha3(myAddress.asBytes() + sha3(_init).asBytes()));
 
 	Transaction t(_endowment, gasPrice, io_gas, _init.toBytes());

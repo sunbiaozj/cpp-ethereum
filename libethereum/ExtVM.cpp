@@ -122,7 +122,7 @@ h160 ExtVM::create(u256 _endowment, u256& io_gas, bytesConstRef _code, Instructi
 	if (_op == Instruction::CREATE)
 		result = e.createOpcode(myAddress, _endowment, gasPrice, io_gas, _code, origin);
 	else
-		result = e.createP2shOpcode(myAddress, _endowment, gasPrice, io_gas, _code, origin);
+		result = e.create2Opcode(myAddress, _endowment, gasPrice, io_gas, _code, origin);
 
 	if (!result)
 	{
