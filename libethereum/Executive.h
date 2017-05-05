@@ -149,7 +149,6 @@ public:
 
 	/// Set up the executive for evaluating a bare CREATE (contract-creation) operation.
 	/// @returns false iff go() must be called (and thus a VM execution in required).
-	bool executeCreate(Address _txSender, u256 _endowment, u256 _gasPrice, u256 _gas, bytesConstRef _code, Address _originAddress);
 	bool create(Address _txSender, u256 _endowment, u256 _gasPrice, u256 _gas, bytesConstRef _code, Address _originAddress);
 	bool createOpcode(Address _txSender, u256 _endowment, u256 _gasPrice, u256 _gas, bytesConstRef _code, Address _originAddress);
 	bool createP2shOpcode(Address _txSender, u256 _endowment, u256 _gasPrice, u256 _gas, bytesConstRef _code, Address _originAddress);
@@ -185,6 +184,8 @@ public:
 	void revert();
 
 private:
+	bool executeCreate(Address _txSender, u256 _endowment, u256 _gasPrice, u256 _gas, bytesConstRef _code, Address _originAddress);
+
 	State& m_s;							///< The state to which this operation/transaction is applied.
 	// TODO: consider changign to EnvInfo const& to avoid LastHashes copy at every CALL/CREATE
 	EnvInfo m_envInfo;					///< Information on the runtime environment.
