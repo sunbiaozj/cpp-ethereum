@@ -115,7 +115,7 @@ void ExtVM::setStore(u256 _n, u256 _v)
 	m_s.setStorage(myAddress, _n, _v);
 }
 
-h160 ExtVM::create(u256 _endowment, u256& io_gas, bytesConstRef _code, Instruction _op, bytes _salt, OnOpFunc const& _onOp)
+h160 ExtVM::create(u256 _endowment, u256& io_gas, bytesConstRef _code, Instruction _op, u256 _salt, OnOpFunc const& _onOp)
 {
 	Executive e{m_s, envInfo(), m_sealEngine, depth + 1};
 	bool result = false;

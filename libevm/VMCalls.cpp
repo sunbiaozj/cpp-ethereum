@@ -119,7 +119,7 @@ void VM::caseCreate()
 	auto const& endowment = m_SP[0];
 	uint64_t initOff;
 	uint64_t initSize;
-	bytes salt;
+	u256 salt;
 	if (m_OP == Instruction::CREATE)
 	{
 		initOff = (uint64_t)m_SP[1];
@@ -127,13 +127,11 @@ void VM::caseCreate()
 	}
 	else
 	{
-		salt = toBigEndian(m_SP[1]);
+		salt = m_SP[1];
 		initOff = (uint64_t)m_SP[2];
 		initSize = (uint64_t)m_SP[3];
 	}
 
-	if (m_OP == Instruction::CREATE2)
-		salt = toBigEndian(m_SP[3]);
 	if (m_ext->balance(m_ext->myAddress) >= endowment && m_ext->depth < 1024)
 	{
 		*m_io_gas_p = m_io_gas;

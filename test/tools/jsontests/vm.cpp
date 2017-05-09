@@ -38,7 +38,7 @@ FakeExtVM::FakeExtVM(EnvInfo const& _envInfo, unsigned _depth):			/// TODO: XXX:
 	ExtVMFace(_envInfo, Address(), Address(), Address(), 0, 1, bytesConstRef(), bytes(), EmptySHA3, _depth)
 {}
 
-h160 FakeExtVM::create(u256 _endowment, u256& io_gas, bytesConstRef _init, Instruction _op, bytes salt, OnOpFunc const&)
+h160 FakeExtVM::create(u256 _endowment, u256& io_gas, bytesConstRef _init, Instruction _op, u256 salt, OnOpFunc const&)
 {
 	unique_ptr<SealEngineFace> se(ChainParams(genesisInfo(eth::Network::MainNetworkTest)).createSealEngine());
 	/*
@@ -51,7 +51,7 @@ h160 FakeExtVM::create(u256 _endowment, u256& io_gas, bytesConstRef _init, Instr
 	if (_op == Instruction::CREATE)
 		na = right160(sha3(rlpList(myAddress, get<1>(addresses[myAddress]))));
 	else if (_op == Instruction::CREATE2)
-		na = right160(sha3(myAddress.asBytes() + salt + sha3(_init).asBytes()));
+		na = right160(sha3(myAddress.asBytes() + toBigEndian(salt) + sha3(_init).asBytes()));
 
 	Transaction t(_endowment, gasPrice, io_gas, _init.toBytes());
 	callcreates.push_back(t);
