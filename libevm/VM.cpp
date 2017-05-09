@@ -214,7 +214,7 @@ void VM::interpretCases()
 
 		CASE(CREATE2)
 		{
-			if (!m_schedule->haveCreateP2sh)
+			if (!m_schedule->haveCreate2)
 				throwBadInstruction();
 			m_bounce = &VM::caseCreate;
 		}

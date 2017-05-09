@@ -39,7 +39,7 @@ struct EVMSchedule
 	bool eip150Mode = false;
 	bool eip158Mode = false;
 	bool haveRevert = false;
-	bool haveCreateP2sh = false;
+	bool haveCreate2 = false;
 	std::array<unsigned, 8> tierStepGas;
 	unsigned expGas = 10;
 	unsigned expByteGas = 10;
@@ -110,7 +110,7 @@ static const EVMSchedule MetropolisSchedule = []
 {
 	EVMSchedule schedule = EIP158Schedule;
 	schedule.haveRevert = true;
-	schedule.haveCreateP2sh= true;
+	schedule.haveCreate2= true;
 	return schedule;
 }();
 
