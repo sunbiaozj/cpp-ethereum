@@ -310,6 +310,8 @@ bool Executive::create(Address _txSender, u256 _endowment, u256 _gasPrice, u256 
 {
 	if (m_envInfo.number() >= m_sealEngine.chainParams().u256Param("metropolisForkBlock"))
 	{
+		if (_txSender != MaxAddress) // EIP86
+			m_s.incNonce(_txSender);
 		m_newAddress = right160(sha3(MaxAddress.asBytes() + sha3(_init).asBytes()));
 		return executeCreate(_txSender, _endowment, _gasPrice, _gas, _init, _origin);
 	}
@@ -328,6 +330,8 @@ bool Executive::createOpcode(Address _txSender, u256 _endowment, u256 _gasPrice,
 
 bool Executive::create2Opcode(Address _txSender, u256 _endowment, u256 _gasPrice, u256 _gas, bytesConstRef _init, Address _origin)
 {
+	if (_txSender != MaxAddress) // EIP86
+		m_s.incNonce(_txSender);
 	m_newAddress = right160(sha3(_txSender.asBytes() + sha3(_init).asBytes()));
 	return executeCreate(_txSender, _endowment, _gasPrice, _gas, _init, _origin);
 }
