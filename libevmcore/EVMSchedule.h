@@ -110,7 +110,7 @@ static const EVMSchedule MetropolisSchedule = []
 {
 	EVMSchedule schedule = EIP158Schedule;
 	schedule.haveRevert = true;
-	schedule.haveCreate2= true;
+	schedule.haveCreate2 = true;
 	return schedule;
 }();
 
