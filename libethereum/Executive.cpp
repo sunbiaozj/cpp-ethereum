@@ -354,11 +354,6 @@ bool Executive::executeCreate(Address _sender, u256 _endowment, u256 _gasPrice, 
 	// Schedule _init execution if not empty.
 	if (!_init.empty())
 		m_ext = make_shared<ExtVM>(m_s, m_envInfo, m_sealEngine, m_newAddress, _sender, _origin, _endowment, _gasPrice, bytesConstRef(), _init, sha3(_init), m_depth);
-	else if (m_s.addressHasCode(m_newAddress))
-		// Overwrite with empty code in case the account already has a code
-		// (address collision -- not real life case but we can check it with
-		// synthetic tests).
-		m_s.setNewCode(m_newAddress, {});
 
 	return !m_ext;
 }
@@ -396,7 +391,9 @@ bool Executive::go(OnOpFunc const& _onOp)
 			auto vm = _onOp ? VMFactory::create(VMKind::Interpreter) : VMFactory::create();
 			if (m_isCreation)
 			{
-				if (m_envInfo.number() >= m_sealEngine.chainParams().u256Param("metropolisForkBlock") && m_s.addressHasCode(m_newAddress))
+				if (m_envInfo.number() >= m_sealEngine.chainParams().u256Param("metropolisForkBlock") &&
+					m_s.addressHasCode(m_newAddress) &&
+					m_s.code(m_newAddress).size() != 0 || m_s.getNonce(m_newAddress))
 					BOOST_THROW_EXCEPTION(AddressAlreadyUsed()); // EIP86
 
 				auto out = vm->exec(m_gas, *m_ext, _onOp);
