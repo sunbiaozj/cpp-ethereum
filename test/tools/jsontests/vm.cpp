@@ -48,10 +48,17 @@ h160 FakeExtVM::create(u256 _endowment, u256& io_gas, bytesConstRef _init, Instr
 	 *   - CREATE2: declared after metropolis fork, create using code
 	 */
 	Address na;
-	if (_op == Instruction::CREATE)
+	if (envInfo().number() >= se->chainParams().u256Param("metropolisForkBlock"))
+	{
+		if (_op == Instruction::CREATE)
+			na = right160(sha3(rlpList(myAddress, get<1>(addresses[myAddress]))));
+		else if (_op == Instruction::CREATE2)
+			na = right160(sha3(myAddress.asBytes() + toBigEndian(salt) + sha3(_init).asBytes()));
+	}
+	else
 		na = right160(sha3(rlpList(myAddress, get<1>(addresses[myAddress]))));
-	else if (_op == Instruction::CREATE2)
-		na = right160(sha3(myAddress.asBytes() + toBigEndian(salt) + sha3(_init).asBytes()));
+
+
 
 	Transaction t(_endowment, gasPrice, io_gas, _init.toBytes());
 	callcreates.push_back(t);
