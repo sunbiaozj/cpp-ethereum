@@ -317,17 +317,17 @@ bool Executive::create(Address _txSender, u256 _endowment, u256 _gasPrice, u256 
 		return createOpcode(_txSender, _endowment, _gasPrice, _gas, _init, _origin);
 }
 
-bool Executive::createOpcode(Address _txSender, u256 _endowment, u256 _gasPrice, u256 _gas, bytesConstRef _init, Address _origin)
+bool Executive::createOpcode(Address _sender, u256 _endowment, u256 _gasPrice, u256 _gas, bytesConstRef _init, Address _origin)
 {
-	u256 nonce = m_s.getNonce(_txSender);
-	m_newAddress = right160(sha3(rlpList(_txSender, nonce)));
-	return executeCreate(_txSender, _endowment, _gasPrice, _gas, _init, _origin);
+	u256 nonce = m_s.getNonce(_sender);
+	m_newAddress = right160(sha3(rlpList(_sender, nonce)));
+	return executeCreate(_sender, _endowment, _gasPrice, _gas, _init, _origin);
 }
 
-bool Executive::create2Opcode(Address _txSender, u256 _endowment, u256 _gasPrice, u256 _gas, bytesConstRef _init, Address _origin, u256 _salt)
+bool Executive::create2Opcode(Address _sender, u256 _endowment, u256 _gasPrice, u256 _gas, bytesConstRef _init, Address _origin, u256 _salt)
 {
-	m_newAddress = right160(sha3(_txSender.asBytes() + toBigEndian(_salt) + sha3(_init).asBytes()));
-	return executeCreate(_txSender, _endowment, _gasPrice, _gas, _init, _origin);
+	m_newAddress = right160(sha3(_sender.asBytes() + toBigEndian(_salt) + sha3(_init).asBytes()));
+	return executeCreate(_sender, _endowment, _gasPrice, _gas, _init, _origin);
 }
 
 bool Executive::executeCreate(Address _sender, u256 _endowment, u256 _gasPrice, u256 _gas, bytesConstRef _init, Address _origin)
@@ -337,7 +337,7 @@ bool Executive::executeCreate(Address _sender, u256 _endowment, u256 _gasPrice, 
 
 	m_savepoint = m_s.savepoint();
 
-	m_isCreation = true;	
+	m_isCreation = true;
 
 	// We can allow for the reverted state (i.e. that with which m_ext is constructed) to contain the m_orig.address, since
 	// we delete it explicitly if we decide we need to revert.
