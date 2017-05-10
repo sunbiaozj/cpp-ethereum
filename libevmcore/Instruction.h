@@ -182,7 +182,7 @@ enum class Instruction: uint8_t
 	JUMPC,              ///< alter the program counter - pre-verified
 	JUMPCI,             ///< conditionally alter the program counter - pre-verified
 
-	CREATE = 0xf0,      ///< create a new account with associated code. (since EIP86: sha3((MaxAddress + sha3(code))
+	CREATE = 0xf0,      ///< create a new account with associated code
 	CALL,               ///< message-call into an account
 	CALLCODE,           ///< message-call with another account's code only
 	RETURN,             ///< halt execution returning output data
