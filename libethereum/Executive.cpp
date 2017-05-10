@@ -393,7 +393,7 @@ bool Executive::go(OnOpFunc const& _onOp)
 			{
 				if (m_envInfo.number() >= m_sealEngine.chainParams().u256Param("metropolisForkBlock") &&
 					m_s.addressHasCode(m_newAddress) &&
-					m_s.code(m_newAddress).size() != 0 || m_s.getNonce(m_newAddress))
+					(m_s.code(m_newAddress).size() != 0 || m_s.getNonce(m_newAddress)))
 					BOOST_THROW_EXCEPTION(AddressAlreadyUsed()); // EIP86
 
 				auto out = vm->exec(m_gas, *m_ext, _onOp);
