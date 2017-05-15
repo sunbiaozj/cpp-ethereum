@@ -261,4 +261,25 @@ BOOST_AUTO_TEST_CASE(bGetReceiptOverflow)
 	BOOST_CHECK_THROW(block.receipt(123), std::out_of_range);
 }
 
+BOOST_AUTO_TEST_CASE(bBlockhashRefactoring)
+{
+	TestBlockChain::s_sealEngineNetwork = Network::TransitionnetTest;
+
+	TestBlockChain testBlockchain(TestBlockChain::defaultGenesisBlock());
+	TestBlock const& genesisBlock = testBlockchain.testGenesis();
+	OverlayDB const& genesisDB = genesisBlock.state().db();
+	BlockChain const& blockchain = testBlockchain.interface();
+
+	TestBlock testBlock;
+
+	testBlock.mine(testBlockchain);
+	testBlockchain.addBlock(testBlock);
+
+	Block block = blockchain.genesisBlock(genesisDB);
+	block.resetCurrent();
+
+	BOOST_REQUIRE(block.state().addressHasCode(Address(0xf0)));
+
+}
+
 BOOST_AUTO_TEST_SUITE_END()

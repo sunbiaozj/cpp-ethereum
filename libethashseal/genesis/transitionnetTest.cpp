@@ -20,7 +20,7 @@ static dev::h256 const c_genesisStateRootTest;
 static std::string const c_genesisInfoTest = std::string() +
 R"E(
 {
-	"sealEngine": "Ethash",
+	"sealEngine": "NoProof",
 	"params": {
 		"accountStartNonce": "0x00",
 		"homsteadForkBlock": "0x05",
